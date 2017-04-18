@@ -18,7 +18,6 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     public void addProduct(Product product) {
-        System.out.println("======I am in addProduct serviceImpl======");
         productDao.addCountry(product);
     }
 

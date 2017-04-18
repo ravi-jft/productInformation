@@ -1,6 +1,7 @@
 package com.productStore.dao;
 
 import com.productStore.domain.Product;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -18,17 +19,11 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     private HibernateTemplate hibernateTemplate;
 
-  /*  public ProductDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory=sessionFactory;
-    }*/
-
-
-    @Transactional
+ /*   @Transactional
     public Product addCountry(Product product) {
-        System.out.println("=============I am in addCountry DaoImpl1========");
-       /* Session session = this.sessionFactory.getCurrentSession();
+       *//* Session session = this.sessionFactory.getCurrentSession();
         session.persist(product);
-        session.close();*/
+        session.close();*//*
        // Session session= sessionFactory.openSession();
     //  sessionFactory.getCurrentSession().saveOrUpdate(product);
       // Transaction transaction =  session.beginTransaction();
@@ -38,13 +33,19 @@ public class ProductDaoImpl implements ProductDao {
        // System.out.println("=============I am in addCountry DaoImpl2========");
         System.out.println(hibernateTemplate.save(product)+"--------------------------");
         return null;
-    }
+    }*/
+ @Transactional
+ public void addCountry(Product product) {
+     hibernateTemplate.save(product);
+ }
 
     public List getAllProducts() {
         //Session session = this.sessionFactory.getCurrentSession();
 
        //List<Product> productList = session.createCriteria(Product.class).list();
-        return null;
+        List<Product> productList = (List<Product>) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Product.class));
+
+        return productList;
     }
 
 }

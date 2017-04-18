@@ -3,22 +3,23 @@ package com.productStore.config;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;;
+import org.springframework.context.annotation.*;
+;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.beans.PropertyVetoException;
 import java.util.Properties;
 
 @Configuration
+@EnableWebMvc
 @ComponentScan("com.productStore")
 @EnableTransactionManagement
+@Import({SecurityConfig.class})
 public class RootApplicationContextConfig {
 
     private Properties getHibernateProperties() {

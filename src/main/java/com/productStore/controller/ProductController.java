@@ -28,7 +28,6 @@ public class ProductController {
 
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST,headers = "Accept=application/json")
     public String saveOrUpdate(@ModelAttribute("product") Product product){
-        System.out.println("=========I am in save method controller=======");
         productService.addProduct(product);
         return "redirect:/getAllProducts";
     }
