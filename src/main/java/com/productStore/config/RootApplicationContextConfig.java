@@ -22,6 +22,7 @@ import java.util.Properties;
 @Import({SecurityConfig.class})
 public class RootApplicationContextConfig {
 
+
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");

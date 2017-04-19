@@ -19,14 +19,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
     }
 
-    @Override
+ /*   @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        http.formLogin().loginPage("/login")
+                .usernameParameter("userId")
+                .passwordParameter("password");
+        http.formLogin().defaultSuccessUrl
+                ("/market/products/add")
+                .failureUrl("/login?error");
+        http.logout().logoutSuccessUrl("/login");
+                http.exceptionHandling().accessDeniedPage
+                        ("/login?accessDenied");
         http.authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
+                .antMatchers("/admin*//**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/dba*//**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
                 .and().formLogin();
 
         http.csrf().disable();
-    }
+    }*/
 }
