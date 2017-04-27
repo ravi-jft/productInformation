@@ -1,9 +1,8 @@
 package com.productStore.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -14,10 +13,12 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 3678107792576131001L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productId;
+    @NotNull
     private String name;
     private BigDecimal unitPrice;
+    @Size(min = 10,max = 20)
     private String description;
     private String manufacturer;
     private String category;
