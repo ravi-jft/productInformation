@@ -13,6 +13,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.util.UrlPathHelper;
 
+import javax.servlet.descriptor.TaglibDescriptor;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.Tag;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.productStore")
@@ -46,4 +51,34 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter{
         return messageSource;
     }
 
+/*    public Taglib taglib() {
+        TaglibDescriptor tablibDesc = new TaglibDescriptor() {
+            @Override
+            public String getTaglibURI() {
+                return "http://productInformation.com/jsp/tlds/mytags";
+            }
+
+            @Override
+            public String getTaglibLocation() {
+                return "/WEB-INF/numberformatter.tld";
+            }
+
+        }
+    }*/
+
+    public TaglibDescriptor taglibDescriptor(){
+        TaglibDescriptor taglibDescriptor = new TaglibDescriptor() {
+
+            @Override
+            public String getTaglibURI() {
+                return "http://productInformation.com/jsp/tlds/mytags";
+            }
+
+            @Override
+            public String getTaglibLocation() {
+                return "/WEB-INF/numberformatter.tld";
+            }
+        };
+        return taglibDescriptor;
+    }
 }

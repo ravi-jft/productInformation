@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="mytags" uri="http://productInformation.com/jsp/tlds/mytags" %>
 
 <html>
 <head>
@@ -32,6 +33,7 @@
 	<input type="text" name="manufacturer"  value="Description..." onclick="this.value=''"/><br/>
 	<input type="text" name="category"  value="Category..." onclick="this.value=''"/><br/>
 	<input type="number" name="unitsInStock"  value="Description..." onclick="this.value=''"/><br/>
+	<mytags:formatNumber number="100050.574" format="#,###.00"/><br><br>
 	<input type="submit" value="register"/>
 </form>
 </body>
