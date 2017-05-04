@@ -11,4 +11,6 @@ public interface ProductService {
 
     void addProduct(Product product);
     List getAllProducts();
+
+    public void sendSimpleEmail();
 }

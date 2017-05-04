@@ -2,6 +2,7 @@ package com.productStore.controller;
 
 import com.productStore.domain.Product;
 import com.productStore.service.ProductService;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,12 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @ComponentScan("com.productStore")
 
 public class ProductController {
+    //private static final Logger logger = (Logger) LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;
@@ -32,6 +34,7 @@ public class ProductController {
         this.messageSource = messageSource;
     }
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(){
         return "index";
@@ -40,10 +43,6 @@ public class ProductController {
     @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST,headers = "Accept=application/json")
     public String saveOrUpdate(@ModelAttribute("product") @Valid Product product,BindingResult result,Model model){
         if (result.hasErrors()){
-           result.getAllErrors().forEach(objectError -> {
-               System.out.println(objectError);
-           });
-            /*model.addAttribute("product");*/
                 return "index";
         }
         productService.addProduct(product);
@@ -52,6 +51,12 @@ public class ProductController {
     @RequestMapping(value = "product",method = RequestMethod.GET)
     public Product product(){
         return new Product();
+    }
+
+    @RequestMapping(value = "/sendmail")
+    public void sendmail(){
+        productService.sendSimpleEmail();
+        //return "redirect:/index";
     }
 
    /* @RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST,headers = "Accept=application/json")

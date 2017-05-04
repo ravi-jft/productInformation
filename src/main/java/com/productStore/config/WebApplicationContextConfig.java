@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -17,6 +20,7 @@ import javax.servlet.descriptor.TaglibDescriptor;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
@@ -80,5 +84,33 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter{
             }
         };
         return taglibDescriptor;
+    }
+
+    //email sending
+  /*  @Bean
+    public MailSender mailSender(Environment env){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(env.getProperty("mailserver.host"));
+        //mailSender.getHost("mail.smtp")
+        return mailSender;
+    }*/
+    private Properties getMailProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.socketFactory.port", "465");
+        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.setProperty("mail.smtp.socketFactory.fallback", "false");
+        return properties;
+    }
+
+    @Bean
+    public MailSender mailSender(){
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(465);
+        mailSender.setUsername("ravikumaraggarwalabc@gmail.com");
+        mailSender.setPassword("shivmandir");
+        mailSender.setJavaMailProperties(getMailProperties());
+        return mailSender;
     }
 }
