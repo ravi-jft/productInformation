@@ -53,6 +53,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public Users findByEmail(String email) {
+        return  (Users) hibernateTemplate.findByCriteria(
+                DetachedCriteria.forClass(Users.class)
+                        .add(Restrictions.eq("email", email))).get(0);
+    }
+
+    @Override
     public Roles findByAuthority(String role) {
         return (Roles)hibernateTemplate.findByCriteria(DetachedCriteria.forClass(Roles.class)
         .add(Restrictions.eq("name",role))).get(0);

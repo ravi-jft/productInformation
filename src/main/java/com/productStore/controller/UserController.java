@@ -1,5 +1,6 @@
 package com.productStore.controller;
 
+import com.productStore.dao.UserDao;
 import com.productStore.domain.Users;
 import com.productStore.service.UserService;
 import com.productStore.service.UserServiceImpl;
@@ -9,13 +10,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @Controller
 @ComponentScan("com.productStore")
 @RequestMapping(value = "/user")
 public class UserController {
+
+    @Autowired
+    private UserDao userDao;
 
 
   /*  @Qualifier("UserServiceImpl")*/
@@ -49,4 +55,20 @@ public class UserController {
         return "create";
     }
 
+    /*Forget Password */
+
+    @RequestMapping(value = "/enterEmail",method = RequestMethod.GET)
+    public String  enterEmail(){
+        return "enterEmail";
+    }
+
+    @RequestMapping(value = "/sendLink",method = RequestMethod.POST)
+    public String sendLink(@RequestParam("email") String email) {
+        Users userInstance = userDao.findByEmail(email);
+        System.out.println("========email=========="+email);
+        String token = UUID.randomUUID().toString();
+        userInstance.setToken(token);
+        userService.Email(email,token);
+        return "redirect:/welcome";
+    }
 }
