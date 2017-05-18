@@ -39,7 +39,8 @@
             <version>5.0.1.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/displaytag/displaytag -->
+        <!-- https://mvnrepository.com/artifact/displaytag/displayta
+        g -->
         <dependency>
             <groupId>displaytag</groupId>
             <artifactId>displaytag</artifactId>
@@ -160,6 +161,27 @@
             <artifactId>javax.mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>4.0.4.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.11.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>productInformation</finalName>
