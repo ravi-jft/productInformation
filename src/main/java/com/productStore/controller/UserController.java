@@ -7,10 +7,8 @@ import com.productStore.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -68,7 +66,43 @@ public class UserController {
         System.out.println("========email=========="+email);
         String token = UUID.randomUUID().toString();
         userInstance.setToken(token);
+        userDao.save(userInstance);
         userService.Email(email,token);
+        return "redirect:/welcome";
+    }
+
+    @RequestMapping(value = "/resetLink/{token}")
+    public String resetLink(@PathVariable(value = "token") String token){
+        System.out.println("====token in resetLink=========="+token);
+        Users userInstance = userDao.findByToken(token);
+        System.out.println("======userInstance========"+userInstance);
+        if (userInstance!=null)
+            return "redirect:/user/resetPassword/"+token;
+        else {
+            System.out.println("invalid password");
+            return "redirect:/welcome";
+        }
+    }
+
+    @RequestMapping(value = "/resetPassword/{token}")
+    public String resetPassword(@PathVariable(value = "token") String token, ModelMap model){
+        model.addAttribute("token",token);
+        return "resetPassword";
+    }
+
+    @RequestMapping(value = "/saveResetPassword")
+    public String saveResetPassword(@RequestParam("token") String token,@RequestParam("password") String password,@RequestParam("confirmpwd") String confirmpwd){
+        System.out.println("======token====="+token);
+       Users userInstance = userDao.findByToken(token);
+        System.out.println("=======token========"+userInstance);
+       /* if (password!=confirmpwd){
+            System.out.println("password is not matched");
+        }*/
+
+            userInstance.setPassword(password);
+            userInstance.setToken(null);
+            userDao.save(userInstance);
+
         return "redirect:/welcome";
     }
 }
