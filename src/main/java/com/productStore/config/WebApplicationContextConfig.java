@@ -1,9 +1,13 @@
 package com.productStore.config;
 
+import com.productStore.aspectConfig.MyAspect;
+import com.productStore.service.CheckAspectServiceImpl;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailSender;
@@ -25,6 +29,8 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.productStore")
+//@ComponentScan(basePackages = {"com.productStore.aspectConfig","com.productStore"})
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WebApplicationContextConfig extends WebMvcConfigurerAdapter{
 
     @Override
@@ -112,5 +118,13 @@ public class WebApplicationContextConfig extends WebMvcConfigurerAdapter{
         mailSender.setPassword("shivmandir");
         mailSender.setJavaMailProperties(getMailProperties());
         return mailSender;
+    }
+
+    @Bean
+    public ProxyFactoryBean proxyFactoryBean(){
+        ProxyFactoryBean pfb = new ProxyFactoryBean();
+        pfb.setTarget(new CheckAspectServiceImpl());
+        pfb.setInterceptorNames(new String[]{String.valueOf(new MyAspect())});
+        return pfb;
     }
 }
